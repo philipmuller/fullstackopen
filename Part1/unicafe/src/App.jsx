@@ -19,13 +19,16 @@ const Statistics = ({ statistics }) => {
     text: 'Total',
     value: statistics.reduce((tot, stat) => tot + stat.value, 0)
   }
+
+  if (total.value === 0) return <p>No feedback yet</p>
+
   const avg = {
     text: 'Average',
-    value: total.value === 0 ? "No data" : (good.value - bad.value) / total.value
+    value: (good.value - bad.value) / total.value
   }
   const positive = {
     text: 'Positive',
-    value: total.value === 0 ? "No data" : `${(good.value / total.value)*100}%`
+    value: `${(good.value / total.value)*100}%`
   }
 
   return (
