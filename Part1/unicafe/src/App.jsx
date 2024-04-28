@@ -12,7 +12,7 @@ const Button = ({ onClick, text }) => {
 
 const Statistic = ({ statistic }) => <p>{statistic.text}: {statistic.value}</p>
 
-const StatBlock = ({ statistics }) => {
+const Statistics = ({ statistics }) => {
   const [good, neutral, bad] = statistics
 
   const total = {
@@ -60,7 +60,7 @@ const App = () => {
 
       <Title text={"Statistics"} />
 
-      <StatBlock statistics={[
+      <Statistics statistics={[
         { text: 'Good', value: good },
         { text: 'Neutral', value: neutral },
         { text: 'Bad', value: bad }
