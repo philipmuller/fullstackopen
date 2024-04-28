@@ -13,12 +13,30 @@ const Button = ({ onClick, text }) => {
 const Statistic = ({ statistic }) => <p>{statistic.text}: {statistic.value}</p>
 
 const StatBlock = ({ statistics }) => {
+  const [good, neutral, bad] = statistics
+
+  const total = {
+    text: 'Total',
+    value: statistics.reduce((tot, stat) => tot + stat.value, 0)
+  }
+  const avg = {
+    text: 'Average',
+    value: total.value === 0 ? "No data" : (good.value - bad.value) / total.value
+  }
+  const positive = {
+    text: 'Positive',
+    value: total.value === 0 ? "No data" : `${(good.value / total.value)*100}%`
+  }
+
   return (
     <>
       {/*statistics.map((stat, index) => <Statistic key={index} text={stat.text} value={stat.value} />)*/}
-      <Statistic statistic={statistics[0]} />
-      <Statistic statistic={statistics[1]} />
-      <Statistic statistic={statistics[2]} />
+      <Statistic statistic={good} />
+      <Statistic statistic={neutral} />
+      <Statistic statistic={bad} />
+      <Statistic statistic={total} />
+      <Statistic statistic={avg} />
+      <Statistic statistic={positive} />
     </>
   )
 }
