@@ -10,7 +10,7 @@ const Button = ({ onClick, text }) => {
   )
 }
 
-const Statistic = ({ statistic }) => <p>{statistic.text}: {statistic.value}</p>
+const StatisticLine = ({ statistic }) => <p>{statistic.text}: {statistic.value}</p>
 
 const Statistics = ({ statistics }) => {
   const [good, neutral, bad] = statistics
@@ -33,13 +33,12 @@ const Statistics = ({ statistics }) => {
 
   return (
     <>
-      {/*statistics.map((stat, index) => <Statistic key={index} text={stat.text} value={stat.value} />)*/}
-      <Statistic statistic={good} />
-      <Statistic statistic={neutral} />
-      <Statistic statistic={bad} />
-      <Statistic statistic={total} />
-      <Statistic statistic={avg} />
-      <Statistic statistic={positive} />
+      <StatisticLine statistic={good} />
+      <StatisticLine statistic={neutral} />
+      <StatisticLine statistic={bad} />
+      <StatisticLine statistic={total} />
+      <StatisticLine statistic={avg} />
+      <StatisticLine statistic={positive} />
     </>
   )
 }
