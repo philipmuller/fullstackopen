@@ -3,10 +3,12 @@ import PersonInput from './components/PersonInput'
 import Filter from './components/Filter'
 import ContactsList from './components/ContactsList'
 import phonebook from './services/phonebook'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [filter, setFilter] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState(null)
 
   useEffect(() => {
     phonebook
@@ -17,6 +19,13 @@ const App = () => {
       })
   }, [])
 
+  const displayNotification = (message) => {
+    setNotificationMessage(message)
+    setTimeout(() => {
+      setNotificationMessage(null)
+    }, 5000)
+  }
+
   const addPerson = ({name, number}) => {
     const existingContact = persons.find(person => person.name === name)
     if (existingContact !== undefined) {
@@ -25,14 +34,15 @@ const App = () => {
       }
 
       phonebook
-      .update(existingContact.id, {...existingContact, number: number})
-      .then(response => {
-        console.log(response.data)
-        setPersons(persons.map(person => person.id !== existingContact.id ? person : response.data))
-      })
-      .catch(error => {
-        alert(`An error occured ${error}`)
-      })
+        .update(existingContact.id, {...existingContact, number: number})
+        .then(response => {
+          console.log(response.data)
+          setPersons(persons.map(person => person.id !== existingContact.id ? person : response.data))
+          displayNotification(`Updated ${name}!`)
+        })
+        .catch(error => {
+          alert(`An error occured ${error}`)
+        })
     } else {
       const newPerson = { name, number }
 
@@ -41,6 +51,7 @@ const App = () => {
         .then(response => {
           console.log(response.data)
           setPersons(persons.concat(response.data))
+          displayNotification(`Added ${name}!`)
         })
         .catch(error => {
           alert(`An error occured ${error}`)
@@ -68,6 +79,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={notificationMessage} />
       <Filter filter={filter} onChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonInput onSubmit={addPerson} />
