@@ -18,19 +18,32 @@ const App = () => {
   }, [])
 
   const addPerson = ({name, number}) => {
-    if (persons.some(person => person.name === name)) {
-      alert(`${name} is already in the phonebook`)
-    } else {
-      const newPerson = {
-        name: name,
-        number: number
+    const existingContact = persons.find(person => person.name === name)
+    if (existingContact !== undefined) {
+      if (!window.confirm(`${name} is already in the phonebook. Would you like to update their number?`)) {
+        return
       }
+
+      phonebook
+      .update(existingContact.id, {...existingContact, number: number})
+      .then(response => {
+        console.log(response.data)
+        setPersons(persons.map(person => person.id !== existingContact.id ? person : response.data))
+      })
+      .catch(error => {
+        alert(`An error occured ${error}`)
+      })
+    } else {
+      const newPerson = { name, number }
 
       phonebook
         .create(newPerson)
         .then(response => {
           console.log(response.data)
           setPersons(persons.concat(response.data))
+        })
+        .catch(error => {
+          alert(`An error occured ${error}`)
         })
     }
   }

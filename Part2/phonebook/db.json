@@ -3,7 +3,7 @@
     {
       "id": "j90s",
       "name": "Arto Hellas",
-      "number": "040-123456"
+      "number": "1234567890"
     },
     {
       "id": "o09a",
@@ -19,6 +19,16 @@
       "id": "332c",
       "name": "Vesna Tomsic",
       "number": "039-4980204"
+    },
+    {
+      "id": "41f7",
+      "name": "Philip Muller",
+      "number": "039-3664967443"
+    },
+    {
+      "id": "237d",
+      "name": "Arto Rollas",
+      "number": "90830980192"
     }
   ]
 }
