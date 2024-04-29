@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react'
 import PersonInput from './components/PersonInput'
 import Filter from './components/Filter'
 import ContactsList from './components/ContactsList'
-import axios from 'axios'
+import phonebook from './services/phonebook'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    phonebook
+      .getAll()
       .then(response => {
         console.log(response.data)
         setPersons(response.data)
@@ -25,9 +25,9 @@ const App = () => {
         name: name,
         number: number
       }
-      
-      axios
-        .post('http://localhost:3001/persons', newPerson)
+
+      phonebook
+        .create(newPerson)
         .then(response => {
           console.log(response.data)
           setPersons(persons.concat(response.data))
