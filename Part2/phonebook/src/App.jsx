@@ -8,7 +8,7 @@ import Notification from './components/Notification'
 const App = () => {
   const [persons, setPersons] = useState([])
   const [filter, setFilter] = useState('')
-  const [notificationMessage, setNotificationMessage] = useState(null)
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     phonebook
@@ -19,10 +19,10 @@ const App = () => {
       })
   }, [])
 
-  const displayNotification = (message) => {
-    setNotificationMessage(message)
+  const displayNotification = (message, type) => {
+    setNotification({message, type})
     setTimeout(() => {
-      setNotificationMessage(null)
+      setNotification(null)
     }, 5000)
   }
 
@@ -38,10 +38,12 @@ const App = () => {
         .then(response => {
           console.log(response.data)
           setPersons(persons.map(person => person.id !== existingContact.id ? person : response.data))
-          displayNotification(`Updated ${name}!`)
+          displayNotification(`Updated ${name}!`, 'success')
         })
         .catch(error => {
-          alert(`An error occured ${error}`)
+          console.log(error)
+          displayNotification(`${name} is not on the server!`, 'error')
+          setPersons(persons.filter(person => person.id !== existingContact.id))
         })
     } else {
       const newPerson = { name, number }
@@ -51,10 +53,11 @@ const App = () => {
         .then(response => {
           console.log(response.data)
           setPersons(persons.concat(response.data))
-          displayNotification(`Added ${name}!`)
+          displayNotification(`Added ${name}!`, 'success')
         })
         .catch(error => {
-          alert(`An error occured ${error}`)
+          console.log(error)
+          displayNotification(`An error occurred!`, 'error')
         })
     }
   }
@@ -71,7 +74,8 @@ const App = () => {
       setPersons(persons.filter(person => person.id !== id))
     })
     .catch(error => {
-      alert(`Entry with id ${id} was not found on the server. ${error}`)
+      console.log(error)
+      displayNotification(`Entry with id ${id} was not found on the server.`, 'error')
       setPersons(persons.filter(person => person.id !== id))
     })
   }
@@ -79,7 +83,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Notification message={notificationMessage} />
+      <Notification data={notification} />
       <Filter filter={filter} onChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonInput onSubmit={addPerson} />
