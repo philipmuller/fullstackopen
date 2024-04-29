@@ -39,6 +39,19 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  const handleDeletion = (id) => {
+    phonebook
+    .deleteEntry(id)
+    .then(response => {
+      console.log(response.data)
+      setPersons(persons.filter(person => person.id !== id))
+    })
+    .catch(error => {
+      alert(`Entry with id ${id} was not found on the server. ${error}`)
+      setPersons(persons.filter(person => person.id !== id))
+    })
+  }
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -46,7 +59,7 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonInput onSubmit={addPerson} />
       <h2>Numbers</h2>
-      <ContactsList persons={persons} filter={filter} />
+      <ContactsList persons={persons} filter={filter} onDelete={handleDeletion}/>
     </div>
   )
 }

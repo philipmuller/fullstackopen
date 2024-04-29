@@ -1,34 +1,24 @@
 {
   "persons": [
     {
-      "id": 1,
+      "id": "j90s",
       "name": "Arto Hellas",
       "number": "040-123456"
     },
     {
-      "id": 2,
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523"
-    },
-    {
-      "id": 3,
+      "id": "o09a",
       "name": "Dan Abramov",
       "number": "12-43-234345"
     },
     {
-      "id": 4,
+      "id": "b31k",
       "name": "Mary Poppendieck",
       "number": "39-23-6423122"
     },
     {
-      "id": "f7b6",
-      "name": "Philip Muller",
-      "number": "059-3940204"
-    },
-    {
-      "id": "d54e",
+      "id": "332c",
       "name": "Vesna Tomsic",
-      "number": "039-4589208"
+      "number": "039-4980204"
     }
   ]
 }
