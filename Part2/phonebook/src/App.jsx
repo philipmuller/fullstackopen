@@ -41,8 +41,8 @@ const App = () => {
           displayNotification(`Updated ${name}!`, 'success')
         })
         .catch(error => {
-          console.log(error)
-          displayNotification(`${name} is not on the server!`, 'error')
+          console.log(error.response.data.error)
+          displayNotification(error.response.data.error, 'error')
           setPersons(persons.filter(person => person.id !== existingContact.id))
         })
     } else {
@@ -56,8 +56,8 @@ const App = () => {
           displayNotification(`Added ${name}!`, 'success')
         })
         .catch(error => {
-          console.log(error)
-          displayNotification(`An error occurred!`, 'error')
+          console.log(error.response.data.error)
+          displayNotification(error.response.data.error, 'error')
         })
     }
   }
@@ -74,8 +74,8 @@ const App = () => {
       setPersons(persons.filter(person => person.id !== id))
     })
     .catch(error => {
-      console.log(error)
-      displayNotification(`Entry with id ${id} was not found on the server.`, 'error')
+      console.log(error.response.data.error)
+      displayNotification(error.response.data.error, 'error')
       setPersons(persons.filter(person => person.id !== id))
     })
   }
